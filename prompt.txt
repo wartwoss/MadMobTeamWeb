@@ -1,0 +1,898 @@
+# Project Recreation Prompt
+
+## Overview
+Recreate a complete Next.js website called "mmt-ow" — a personal portfolio/studio site for a team called "Mad Mob Team" based in Sulaymaniyah. The design language is **brutalist**: heavy black borders, high-contrast black/white/red color scheme, skewed transforms, monospace fonts, and aggressive typographic styling.
+
+## Tech Stack & Dependencies
+
+Install these exact dependencies:
+
+```bash
+npx create-next-app@16.3.5 mmt-ow --typescript --tailwind --eslint --app --src-dir=false --import-alias="@/*"
+cd mmt-ow
+npm install next@16.3.5 react@19.2.8 react-dom@19.2.8
+npm install next-intl@4.14.5 @heroicons/react@2.2.0
+npm install -D @tailwindcss/postcss@4 tailwindcss@4 @types/node@20 @types/react@19 @types/react-dom@19 @typescript-eslint/eslint-plugin@9 @typescript-eslint/parser@9 eslint@9 eslint-config-next@16.3.5 typescript@5
+```
+
+## Project File Structure
+
+```
+mmt-ow/
+├── app/
+│   ├── layout.tsx
+│   ├── globals.css
+│   ├── [locale]/
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   ├── about/
+│   │   │   └── page.tsx
+│   │   ├── contact/
+│   │   │   └── page.tsx
+│   │   └── projects/
+│   │       └── page.tsx
+│   ├── components/
+│   │   ├── Navbar.tsx
+│   │   ├── Hero.tsx
+│   │   ├── TeamSection.tsx
+│   │   ├── Footer.tsx
+│   │   └── ProjectsPreview.tsx
+├── i18n/
+│   ├── routing.ts
+│   ├── request.ts
+│   └── navigation.ts
+├── messages/
+│   ├── en.json
+│   ├── ar.json
+│   └── ckb.json
+├── next.config.ts
+├── next-env.d.ts
+├── postcss.config.mjs
+├── tsconfig.json
+├── eslint.config.mjs
+├── proxy.ts
+└── .gitignore
+```
+
+---
+
+## All File Contents (copy exactly)
+
+### 1. `package.json`
+```json
+{
+  "name": "mmt-ow",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@heroicons/react": "^2.2.0",
+    "next": "16.3.5",
+    "next-intl": "^4.14.5",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.5",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
+```
+
+### 2. `tsconfig.json`
+```json
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [{ "name": "next" }],
+    "paths": { "@/*": ["./*"] }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next/dev/types/**/*.ts", "**/*.mts"],
+  "exclude": ["node_modules"]
+}
+```
+
+### 3. `eslint.config.mjs`
+```js
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
+
+const eslintConfig = defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
+]);
+
+export default eslintConfig;
+```
+
+### 4. `postcss.config.mjs`
+```js
+const config = {
+  plugins: { "@tailwindcss/postcss": {} },
+};
+export default config;
+```
+
+### 5. `next.config.ts`
+```ts
+import type {NextConfig} from 'next';
+import createNextIntlPlugin from 'next-intl/plugin';
+
+const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
+
+const nextConfig: NextConfig = {};
+
+export default withNextIntl(nextConfig);
+```
+
+### 6. `next-env.d.ts`
+```ts
+/// <reference types="next" />
+/// <reference types="next/image-types/global" />
+import "./.next/types/routes.d.ts";
+import "./.next/types/root-params.d.ts";
+// NOTE: This file should not be edited
+// see https://nextjs.org/docs/app/api-reference/config/typescript for more information.
+```
+
+### 7. `proxy.ts`
+```ts
+import createMiddleware from 'next-intl/middleware';
+import {routing} from './i18n/routing';
+
+export default createMiddleware(routing);
+
+export const config = {
+  matcher: '/((?!api|trpc|_next|_vercel|.*\\..*).*)'
+};
+```
+
+### 8. `.gitignore`
+```
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+```
+
+### 9. `app/globals.css`
+```css
+@import "tailwindcss";
+```
+
+### 10. `app/layout.tsx`
+```tsx
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return children;
+}
+```
+
+### 11. `app/[locale]/layout.tsx`
+```tsx
+import type {Metadata} from 'next';
+import {Space_Mono} from 'next/font/google';
+import {NextIntlClientProvider} from 'next-intl';
+import {getMessages} from 'next-intl/server';
+import {hasLocale} from 'next-intl';
+import {notFound} from 'next/navigation';
+import {routing} from '@/i18n/routing';
+import "../globals.css";
+
+const spaceMono = Space_Mono({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-space-mono",
+});
+
+export const metadata: Metadata = {
+  title: "mmt-ow",
+  description: "",
+};
+
+export default async function LocaleLayout({
+  children,
+  params
+}: {
+  children: React.ReactNode;
+  params: Promise<{locale: string}>;
+}) {
+  const {locale} = await params;
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+
+  const messages = await getMessages();
+  const dir = locale === 'ar' || locale === 'ckb' ? 'rtl' : 'ltr';
+
+  return (
+    <html lang={locale} dir={dir}>
+      <body className={spaceMono.variable}>
+        <NextIntlClientProvider messages={messages}>
+          {children}
+        </NextIntlClientProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+### 12. `app/[locale]/page.tsx`
+```tsx
+import Navbar from "../components/Navbar";
+import Hero from "../components/Hero";
+import TeamSection from "../components/TeamSection";
+import Footer from "../components/Footer";
+
+export default function Home() {
+  return (
+    <>
+      <Navbar />
+      <Hero />
+      <TeamSection />
+      <Footer />
+    </>
+  );
+}
+```
+
+### 13. `app/[locale]/projects/page.tsx`
+```tsx
+import {useTranslations} from 'next-intl';
+import Navbar from "../../components/Navbar";
+
+export default function Projects() {
+  const t = useTranslations('Projects');
+
+  return (
+    <>
+      <Navbar />
+      <main className="flex flex-col items-center justify-center px-6 py-20">
+        <h1 className="mb-4 text-5xl font-black uppercase tracking-tighter">
+          {t('title')}
+        </h1>
+        <p className="max-w-xl text-center font-mono text-lg">
+          {t('description')}
+        </p>
+      </main>
+    </>
+  );
+}
+```
+
+### 14. `app/[locale]/about/page.tsx`
+```tsx
+import {useTranslations} from 'next-intl';
+import Navbar from "../../components/Navbar";
+
+export default function About() {
+  const t = useTranslations('About');
+
+  return (
+    <>
+      <Navbar />
+      <main className="flex flex-col items-center justify-center px-6 py-20">
+        <h1 className="mb-4 text-5xl font-black uppercase tracking-tighter">
+          {t('title')}
+        </h1>
+        <p className="max-w-xl text-center font-mono text-lg">
+          {t('description')}
+        </p>
+      </main>
+    </>
+  );
+}
+```
+
+### 15. `app/[locale]/contact/page.tsx`
+```tsx
+import {useTranslations} from 'next-intl';
+import Navbar from "../../components/Navbar";
+
+export default function Contact() {
+  const t = useTranslations('Contact');
+
+  return (
+    <>
+      <Navbar />
+      <main className="flex flex-col items-center justify-center px-6 py-20">
+        <h1 className="mb-4 text-5xl font-black uppercase tracking-tighter">
+          {t('title')}
+        </h1>
+        <p className="max-w-xl text-center font-mono text-lg">
+          {t('description')}
+        </p>
+      </main>
+    </>
+  );
+}
+```
+
+### 16. `i18n/routing.ts`
+```ts
+import {defineRouting} from 'next-intl/routing';
+
+export const routing = defineRouting({
+  locales: ['ckb', 'en', 'ar'],
+  defaultLocale: 'ckb'
+});
+```
+
+### 17. `i18n/request.ts`
+```ts
+import {getRequestConfig} from 'next-intl/server';
+import {hasLocale} from 'next-intl';
+import {routing} from './routing';
+
+export default getRequestConfig(async ({requestLocale}) => {
+  let locale = await requestLocale;
+
+  if (!locale || !hasLocale(routing.locales, locale)) {
+    locale = routing.defaultLocale;
+  }
+
+  return {
+    locale,
+    messages: (await import(`../messages/${locale}.json`)).default
+  };
+});
+```
+
+### 18. `i18n/navigation.ts`
+```ts
+import {createNavigation} from 'next-intl/navigation';
+import {routing} from './routing';
+
+export const {Link, redirect, usePathname, useRouter, getPathname} =
+  createNavigation(routing);
+```
+
+### 19. `messages/en.json`
+```json
+{
+  "Nav": {
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact",
+    "settings": "Settings"
+  },
+  "Settings": {
+    "theme": "Theme",
+    "brutalistic": "Brutalistic",
+    "minimalistic": "Minimalistic",
+    "fontSize": "Font size",
+    "sm": "Sm",
+    "md": "Md",
+    "lg": "Lg",
+    "language": "Language"
+  },
+  "Hero": {
+    "weBuild": "We build",
+    "digital": "Digital",
+    "solutions": "solutions.",
+    "tagline": "A small studio with big ambitions. Based in Sulaymaniyah, crafting things for the web."
+  },
+  "Team": {
+    "role": "Role:",
+    "contact": "Contact",
+    "frontend": "Frontend",
+    "backend": "Backend"
+  },
+  "Footer": {
+    "rights": "© 2025. All rights reserved."
+  },
+  "About": {
+    "title": "About",
+    "description": "This is the about page."
+  },
+  "Contact": {
+    "title": "Contact",
+    "description": "Get in touch."
+  },
+  "Projects": {
+    "title": "Projects",
+    "description": "A collection of my work."
+  }
+}
+```
+
+### 20. `messages/ar.json`
+```json
+{
+  "Nav": {
+    "projects": "المشاريع",
+    "about": "حول",
+    "contact": "اتصل بنا",
+    "settings": "الإعدادات"
+  },
+  "Settings": {
+    "theme": "السمة",
+    "brutalistic": "بروتاليستيكي",
+    "minimalistic": "بسيط",
+    "fontSize": "حجم الخط",
+    "sm": "صغير",
+    "md": "متوسط",
+    "lg": "كبير",
+    "language": "اللغة"
+  },
+  "Hero": {
+    "weBuild": "نبني",
+    "digital": "رقمية",
+    "solutions": "حلولًا.",
+    "tagline": "استوديو صغير بأحلام كبيرة. مقرنا في السليمانية، نصنع أشياء للويب."
+  },
+  "Team": {
+    "role": "الدور:",
+    "contact": "التواصل",
+    "frontend": "الواجهة الأمامية",
+    "backend": "الواجهة الخلفية"
+  },
+  "Footer": {
+    "rights": "© 2025. جميع الحقوق محفوظة."
+  },
+  "About": {
+    "title": "حول",
+    "description": "هذه الصفحة حول."
+  },
+  "Contact": {
+    "title": "اتصل بنا",
+    "description": "تواصل معنا."
+  },
+  "Projects": {
+    "title": "المشاريع",
+    "description": "مجموعة من أعمالي."
+  }
+}
+```
+
+### 21. `messages/ckb.json`
+```json
+{
+  "Nav": {
+    "projects": "پڕۆژە",
+    "about": "دەربارە",
+    "contact": "پەیوەندی",
+    "settings": "ڕێکخستن"
+  },
+  "Settings": {
+    "theme": "ڕووکاری",
+    "brutalistic": "بروتالیستی",
+    "minimalistic": "مینیمالیستی",
+    "fontSize": "قەبارەی فۆنت",
+    "sm": "بچووک",
+    "md": "ناوەند",
+    "lg": "گەورە",
+    "language": "زمان"
+  },
+  "Hero": {
+    "weBuild": "ئێمە دروست دەکەین",
+    "digital": "دیجیتال",
+    "solutions": "چارەسەر.",
+    "tagline": "ستودیۆیەکی بچووک بە هیوا گەورە. لە سلێمانی، دروستکردنی شت بۆ وێب."
+  },
+  "Team": {
+    "role": "ڕۆڵ:",
+    "contact": "پەیوەندی",
+    "frontend": "پێشەکی",
+    "backend": "پاشەکی"
+  },
+  "Footer": {
+    "rights": "© 2025. هەموو مافەکان پارێزراوە."
+  },
+  "About": {
+    "title": "دەربارە",
+    "description": "ئەم پەیجە دەربارەیە."
+  },
+  "Contact": {
+    "title": "پەیوەندی",
+    "description": "پەیوەندیمان پێوە بکە."
+  },
+  "Projects": {
+    "title": "پڕۆژە",
+    "description": "کۆلێکسیۆنی کارەکانم."
+  }
+}
+```
+
+### 22. `app/components/Navbar.tsx`
+This is the main navigation component with a settings dropdown. It must be a client component (`"use client"`). It displays:
+- A logo link (styled with heavy borders and skew transforms)
+- Navigation links: Projects, About, Contact
+- A Settings dropdown button that opens a panel with:
+  - Theme section: "Brutalistic" and "Minimalistic" clickable spans (non-functional, just UI)
+  - Font size section: "Sm", "Md", "Lg" clickable spans (non-functional)
+  - Language section: En, Ar, Kur buttons that switch locale using `useRouter`
+- Mobile hamburger menu toggle
+- All styling: `bg-black` background, `border-white` borders, `text-white` text, hover effects invert colors (`hover:bg-white hover:text-black`), heavy `skewX` transforms on elements
+- The settings dropdown uses `visible opacity-100` when open and `invisible opacity-0` when closed
+- Use `Bars3Icon` and `XMarkIcon` from `@heroicons/react/24/outline`
+- Import `useTranslations` from `next-intl` for all text
+
+```tsx
+"use client";
+
+import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { useRouter, usePathname } from "@/i18n/navigation";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+
+function SettingsContent() {
+  const t = useTranslations("Settings");
+
+  return (
+    <div className="w-full">
+      <div className="mb-3 border-b-2 border-white pb-2 font-[family-name:var(--font-space-mono)] text-xs font-bold uppercase tracking-widest text-white">
+        {t("theme")}
+      </div>
+      <div className="mb-3 flex gap-2">
+        <span className="cursor-pointer border-2 border-white px-2 py-0.5 font-[family-name:var(--font-space-mono)] text-xs text-white transition-all hover:bg-white hover:text-black">
+          {t("brutalistic")}
+        </span>
+        <span className="cursor-pointer border-2 border-white px-2 py-0.5 font-[family-name:var(--font-space-mono)] text-xs text-white transition-all hover:bg-white hover:text-black">
+          {t("minimalistic")}
+        </span>
+      </div>
+      <div className="mb-3 border-b-2 border-white pb-2 font-[family-name:var(--font-space-mono)] text-xs font-bold uppercase tracking-widest text-white">
+        {t("fontSize")}
+      </div>
+      <div className="mb-3 flex gap-2">
+        <span className="cursor-pointer border-2 border-white px-2 py-0.5 font-[family-name:var(--font-space-mono)] text-xs text-white transition-all hover:bg-white hover:text-black">
+          {t("sm")}
+        </span>
+        <span className="cursor-pointer border-2 border-white px-2 py-0.5 font-[family-name:var(--font-space-mono)] text-xs text-white transition-all hover:bg-white hover:text-black">
+          {t("md")}
+        </span>
+        <span className="cursor-pointer border-2 border-white px-2 py-0.5 font-[family-name:var(--font-space-mono)] text-xs text-white transition-all hover:bg-white hover:text-black">
+          {t("lg")}
+        </span>
+      </div>
+      <div className="border-b-2 border-white pb-2 font-[family-name:var(--font-space-mono)] text-xs font-bold uppercase tracking-widest text-white">
+        {t("language")}
+      </div>
+      <LanguageButtons />
+    </div>
+  );
+}
+
+function LanguageButtons() {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  function switchLocale(locale: string) {
+    router.replace(pathname, {locale});
+  }
+
+  return (
+    <div className="mt-2 flex gap-2">
+      <button onClick={() => switchLocale("en")} className="cursor-pointer border-2 border-white px-2 py-0.5 font-[family-name:var(--font-space-mono)] text-xs text-white transition-all hover:bg-white hover:text-black">En</button>
+      <button onClick={() => switchLocale("ar")} className="cursor-pointer border-2 border-white px-2 py-0.5 font-[family-name:var(--font-space-mono)] text-xs text-white transition-all hover:bg-white hover:text-black">Ar</button>
+      <button onClick={() => switchLocale("ckb")} className="cursor-pointer border-2 border-white px-2 py-0.5 font-[family-name:var(--font-space-mono)] text-xs text-white transition-all hover:bg-white hover:text-black">Kur</button>
+    </div>
+  );
+}
+
+export default function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const t = useTranslations("Nav");
+
+  return (
+    <nav className="border-b-4 border-white bg-black">
+      <div className="flex items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
+        <a href="/" className="border-4 border-white bg-white px-3 py-1 text-xl font-black capitalize text-black tracking-tighter transition-all hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[10px_10px_0_0_#333] hover:bg-black hover:text-white sm:px-5 sm:py-2 sm:text-3xl" style={{ transform: "skewX(-6deg)" }}>
+          <span style={{ display: "inline-block", transform: "skewX(6deg)" }}>LOGO</span>
+        </a>
+        <div className="hidden items-center gap-6 md:flex lg:gap-10">
+          <a href="/projects" className="border-b-2 border-white font-[family-name:var(--font-space-mono)] text-xs font-bold capitalize tracking-widest text-white transition-colors hover:bg-white hover:text-black sm:text-sm">{t("projects")}</a>
+          <a href="/about" className="border-b-2 border-white font-[family-name:var(--font-space-mono)] text-xs font-bold capitalize tracking-widest text-white transition-colors hover:bg-white hover:text-black sm:text-sm">{t("about")}</a>
+          <a href="/contact" className="border-b-2 border-white font-[family-name:var(--font-space-mono)] text-xs font-bold capitalize tracking-widest text-white transition-colors hover:bg-white hover:text-black sm:text-sm">{t("contact")}</a>
+          <div className="relative">
+            <button onClick={() => setSettingsOpen((prev) => !prev)} className="border-2 border-white px-4 py-1.5 font-[family-name:var(--font-space-mono)] text-xs font-bold capitalize tracking-widest text-white transition-all hover:-translate-y-1 hover:skew-x-[-4deg] hover:bg-white hover:text-black" style={{ transform: "skewX(-4deg)" }}>
+              <span style={{ display: "inline-block", transform: "skewX(4deg)" }}>{t("settings")}</span>
+            </button>
+            <div className={`absolute end-0 top-full z-50 mt-2 min-w-[200px] border-4 border-white bg-black p-4 shadow-[6px_6px_0_0_#fff] transition-all ${settingsOpen ? "visible opacity-100" : "invisible opacity-0"}`}>
+              <SettingsContent />
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 md:hidden">
+          <button onClick={() => { setMenuOpen((prev) => !prev); setSettingsOpen(false); }} className="bg-neutral-800 p-2 text-white transition-all hover:bg-white hover:text-black">
+            <span className="block transition-transform duration-300" style={{ transform: menuOpen ? "rotate(90deg)" : "rotate(0deg)" }}>
+              {menuOpen ? <XMarkIcon className="h-5 w-5" /> : <Bars3Icon className="h-5 w-5" />}
+            </span>
+          </button>
+        </div>
+      </div>
+      <div className={`overflow-hidden transition-all duration-300 md:hidden ${menuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}`}>
+        <div className="flex flex-col">
+          <a href="/projects" className="border-b-2 border-white px-6 py-3 font-[family-name:var(--font-space-mono)] text-sm font-bold capitalize tracking-widest text-white transition-colors hover:bg-white hover:text-black">{t("projects")}</a>
+          <a href="/about" className="border-b-2 border-white px-6 py-3 font-[family-name:var(--font-space-mono)] text-sm font-bold capitalize tracking-widest text-white transition-colors hover:bg-white hover:text-black">{t("about")}</a>
+          <a href="/contact" className="border-b-2 border-white px-6 py-3 font-[family-name:var(--font-space-mono)] text-sm font-bold capitalize tracking-widest text-white transition-colors hover:bg-white hover:text-black">{t("contact")}</a>
+          <button onClick={() => setSettingsOpen((prev) => !prev)} className="px-6 py-3 text-left font-[family-name:var(--font-space-mono)] text-sm font-bold capitalize tracking-widest text-white transition-colors hover:bg-white hover:text-black">{t("settings")}</button>
+          <div className={`overflow-hidden transition-all duration-300 ${settingsOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}>
+            <div className="px-6 py-4"><SettingsContent /></div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+}
+```
+
+### 23. `app/components/Hero.tsx`
+```tsx
+import {useTranslations} from 'next-intl';
+
+export default function Hero() {
+  const t = useTranslations('Hero');
+
+  return (
+    <section className="border-b-4 border-black bg-neutral-100 px-6 py-16 sm:py-20">
+      <div className="mx-auto max-w-5xl">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
+          <h1 className="text-4xl font-black uppercase leading-none tracking-tighter sm:text-6xl lg:text-7xl">
+            {t('weBuild')}
+            <br />
+            <span className="inline-block border-4 border-red-600 bg-red-600 px-3 py-1 text-white sm:px-4 sm:py-2" style={{ transform: "skewX(-4deg)" }}>
+              <span style={{ display: "inline-block", transform: "skewX(4deg)" }}>{t('digital')}</span>
+            </span>
+            <br />
+            {t('solutions')}
+          </h1>
+          <p className="max-w-sm pt-2 font-[family-name:var(--font-space-mono)] text-base leading-relaxed text-neutral-500 sm:text-lg lg:text-right">
+            {t('tagline')}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+```
+
+### 24. `app/components/TeamSection.tsx`
+This section features a "Mad Mob Team" heading and two team member cards with a red "blood splash" decorative effect using absolutely positioned blurred circles. Key details:
+- Background: `bg-white`
+- BloodSplash: Absolutely positioned blurred red circles (`bg-red-400/40`, `bg-red-500/35`, etc.) with various rotations and sizes
+- Team members array with name, roleKey, contact
+- Each card: `border-4 border-black bg-neutral-100` with hover shadow effect `hover:shadow-[6px_6px_0_0_#000]`
+- Member initial circle: `bg-neutral-300` with black text
+- Use `useTranslations` from `next-intl`
+
+```tsx
+import {useTranslations} from 'next-intl';
+
+const team = [
+  { name: "Bandan Kamal", roleKey: "frontend" as const, contact: "@bandan" },
+  { name: "Las Taha", roleKey: "backend" as const, contact: "@las" },
+];
+
+function BloodSplash() {
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+      <div className="absolute -top-10 -right-10 h-64 w-72 rotate-[-15deg] rounded-[60%_40%_50%_50%] bg-red-400/40 blur-[2px]" />
+      <div className="absolute -top-4 right-20 h-40 w-48 rotate-[10deg] rounded-[45%_55%_60%_40%] bg-red-500/35 blur-[1px]" />
+      <div className="absolute top-16 right-[35%] h-28 w-36 rotate-[-30deg] rounded-[50%_50%_40%_60%] bg-red-400/30 blur-[2px]" />
+      <div className="absolute top-[40%] right-[10%] h-20 w-24 rotate-[25deg] rounded-[55%_45%_50%_50%] bg-red-500/30 blur-[1px]" />
+      <div className="absolute top-[55%] left-[15%] h-16 w-20 rotate-[-10deg] rounded-[40%_60%_55%_45%] bg-red-400/25 blur-[2px]" />
+      <div className="absolute bottom-20 right-[45%] h-12 w-16 rotate-[35deg] rounded-[50%_50%_45%_55%] bg-red-500/25 blur-[1px]" />
+      <div className="absolute -top-6 right-[55%] h-10 w-10 rotate-[-20deg] rounded-full bg-red-400/35 blur-[1px]" />
+      <div className="absolute top-28 right-[5%] h-8 w-8 rotate-[45deg] rounded-full bg-red-500/40" />
+      <div className="absolute top-[70%] left-[5%] h-6 w-8 rotate-[-40deg] rounded-full bg-red-400/25" />
+      <div className="absolute bottom-16 right-[15%] h-5 w-6 rotate-[30deg] rounded-full bg-red-500/35" />
+      <div className="absolute bottom-10 right-[8%] h-4 w-5 rotate-[-15deg] rounded-full bg-red-400/30" />
+      <div className="absolute bottom-24 right-[20%] h-6 w-7 rotate-[50deg] rounded-full bg-red-500/30" />
+      <div className="absolute bottom-8 right-[25%] h-3 w-4 rotate-[-25deg] rounded-full bg-red-400/25" />
+      <div className="absolute bottom-20 right-[10%] h-4 w-4 rotate-[40deg] rounded-full bg-red-500/35" />
+      <div className="hidden sm:block absolute top-[20%] left-[8%] h-20 w-24 rotate-[-20deg] rounded-[50%_50%_40%_60%] bg-red-400/30 blur-[1px]" />
+      <div className="hidden sm:block absolute top-[35%] left-[3%] h-14 w-16 rotate-[15deg] rounded-[45%_55%_50%_50%] bg-red-500/25 blur-[1px]" />
+      <div className="hidden sm:block absolute top-[50%] left-[5%] h-10 w-12 rotate-[-25deg] rounded-full bg-red-400/30" />
+      <div className="hidden sm:block absolute top-[65%] left-[10%] h-8 w-10 rotate-[30deg] rounded-full bg-red-500/25" />
+      <div className="hidden sm:block absolute top-[15%] left-[12%] h-6 w-7 rotate-[-35deg] rounded-full bg-red-400/35" />
+      <div className="hidden sm:block absolute top-[75%] left-[3%] h-5 w-5 rotate-[20deg] rounded-full bg-red-500/30" />
+      <div className="hidden sm:block absolute top-[45%] left-[1%] h-12 w-14 rotate-[-8deg] rounded-[55%_45%_45%_55%] bg-red-400/20 blur-[2px]" />
+      <div className="hidden sm:block absolute top-[85%] left-[8%] h-4 w-6 rotate-[40deg] rounded-full bg-red-500/25" />
+    </div>
+  );
+}
+
+export default function TeamSection() {
+  const t = useTranslations('Team');
+
+  return (
+    <section className="relative border-b-4 border-black bg-white px-6 pt-8 pb-20 sm:pt-10 sm:pb-28">
+      <BloodSplash />
+      <div className="relative z-10 mx-auto max-w-6xl">
+        <div className="mb-16">
+          <h2 className="inline-block bg-neutral-200 px-6 py-3 text-5xl font-black uppercase italic tracking-tighter sm:text-6xl lg:text-7xl" style={{ transform: "skewX(-6deg)" }}>
+            <span style={{ display: "inline-block", transform: "skewX(6deg)" }}>Mad Mob Team</span>
+          </h2>
+        </div>
+        <div className="relative flex flex-col gap-8 sm:flex-row sm:flex-wrap sm:items-start sm:gap-10 lg:gap-16">
+          {team.map((member) => (
+            <div key={member.name} className="w-full border-4 border-black bg-neutral-100 p-5 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#000] sm:w-96 sm:p-8">
+              <div className="mb-4 flex items-center gap-4">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center border-2 border-black bg-neutral-300 font-black text-xl uppercase sm:h-16 sm:w-16 sm:text-2xl">{member.name[0]}</div>
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-[family-name:var(--font-space-mono)] text-lg font-bold capitalize sm:text-xl">{member.name}</h3>
+                  <p className="font-[family-name:var(--font-space-mono)] text-xs text-neutral-500 sm:text-sm">{t('role')} {t(member.roleKey)}</p>
+                </div>
+                <div className="text-right">
+                  <p className="font-[family-name:var(--font-space-mono)] text-xs font-bold uppercase tracking-widest text-neutral-400">{t('contact')}</p>
+                  <p className="font-[family-name:var(--font-space-mono)] text-sm text-black">{member.contact}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+```
+
+### 25. `app/components/Footer.tsx`
+```tsx
+import {useTranslations} from 'next-intl';
+
+export default function Footer() {
+  const t = useTranslations('Footer');
+
+  return (
+    <footer className="bg-black px-6 py-10">
+      <div className="mx-auto max-w-5xl">
+        <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+          <div className="border-4 border-white bg-white px-4 py-2 text-xl font-black uppercase text-black" style={{ transform: "skewX(-6deg)" }}>
+            <span style={{ display: "inline-block", transform: "skewX(6deg)" }}>LOGO</span>
+          </div>
+          <p className="font-[family-name:var(--font-space-mono)] text-sm text-neutral-400">{t('rights')}</p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+```
+
+### 26. `app/components/ProjectsPreview.tsx`
+```tsx
+const projects = [
+  { name: "Souq Sync", tagline: "Marketplace platform", year: "2025" },
+  { name: "KurdCast", tagline: "Podcast hosting", year: "2025" },
+  { name: "Nomad CLI", tagline: "Dev tools & utilities", year: "2024" },
+];
+
+export default function ProjectsPreview() {
+  return (
+    <section className="border-b-4 border-black bg-neutral-900 px-6 py-16 text-white sm:py-20">
+      <div className="mx-auto max-w-5xl">
+        <div className="mb-10 flex items-end gap-4">
+          <h2 className="text-3xl font-black uppercase tracking-tighter sm:text-4xl">Selected work</h2>
+          <span className="mb-1 h-1 flex-1 bg-white" />
+        </div>
+        <div className="flex flex-col gap-4">
+          {projects.map((project) => (
+            <a key={project.name} href="/projects" className="group flex flex-col items-start justify-between gap-4 border-4 border-white p-6 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:bg-white hover:text-black hover:shadow-[8px_8px_0_0_#fff] sm:flex-row sm:items-center sm:p-8">
+              <div>
+                <h3 className="text-2xl font-black uppercase tracking-tighter sm:text-3xl">{project.name}</h3>
+                <p className="mt-1 font-[family-name:var(--font-space-mono)] text-sm capitalize text-neutral-400 group-hover:text-neutral-500">{project.tagline}</p>
+              </div>
+              <span className="font-[family-name:var(--font-space-mono)] text-sm font-bold tracking-widest">{project.year}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+```
+
+---
+
+## Design Specifications (Critical - Follow Exactly)
+
+### Design Language: Brutalist
+- **Background**: Primary is black (`bg-black`), secondary is white (`bg-white`) or neutral tones (`bg-neutral-100`, `bg-neutral-900`)
+- **Borders**: Heavy white borders (`border-white`, `border-4`, `border-b-4`) on black backgrounds; black borders (`border-black`) on white backgrounds
+- **Typography**: Space Mono font (via `next/font/google`), all-caps, extra-bold (`font-black`), aggressive letter spacing (`tracking-widest`, `tracking-tighter`)
+- **Colors**: Black (#000), White (#fff), Red (#dc143c via `red-600`), Neutral grays (`neutral-100`, `neutral-400`, `neutral-500`, `neutral-800`, `neutral-900`)
+- **Skew transforms**: Heavy `skewX` on logo and headings (`skewX(-6deg)` on container, `skewX(6deg)` on inner span to counteract)
+- **Shadows**: Offset box shadows like `shadow-[10px_10px_0_0_#333]` and `shadow-[6px_6px_0_0_#fff]` — hard-edged, no blur
+- **Hover effects**: Elements translate negatively (`hover:translate-x-[-4px]`, `hover:translate-y-[-4px]`) and swap background/text colors
+- **Mobile**: Hamburger menu, collapsible sections with `max-h` transitions
+- **RTL**: Arabic (`ar`) and Kurdish (`ckb`) locales use `dir="rtl"`, English uses `dir="ltr"`
+
+### Font
+- Import `Space_Mono` from `next/font/google` with subsets `["latin"]`, weights `["400", "700"]`, and CSS variable `--font-space-mono`
+- Apply the variable as `className={spaceMono.variable}` on the `<body>` element
+- All body text uses `font-[family-name:var(--font-space-mono)]`
+
+### i18n Setup
+- Use `next-intl` for internationalization
+- 3 locales: `ckb` (Kurdish, default), `en` (English), `ar` (Arabic)
+- Arabic and Kurdish use RTL layout
+- Message files in `/messages/` directory with JSON structure matching the translations shown above
+- Navigation uses `useRouter`, `usePathname` from `@/i18n/navigation`
+
+## Setup Instructions
+
+1. Run `npm install` to install all dependencies
+2. Run `npm run dev` to start the development server on port 3000
+3. The site should be fully functional with:
+   - Locale switching (En/Ar/Kur) in the Settings dropdown
+   - Navigation links working
+   - All pages rendering correctly
+   - RTL support for Arabic and Kurdish
+   - Brutalist visual design throughout
+4. Run `npm run build` to verify the production build succeeds
+
+## Key Architecture Notes
+
+- All page files use the `"use client"` directive only where interactivity is needed (Navbar is client-side)
+- `app/layout.tsx` is a minimal wrapper that just returns children (Next.js App Router root layout)
+- `app/[locale]/layout.tsx` handles locale, RTL direction, font loading, and i18n provider wrapping
+- The `app/[locale]/` structure means all pages are locale-prefixed (`/en/projects`, `/ar/about`, etc.)
+- The `proxy.ts` file handles middleware for locale routing
+- All translations come from JSON message files
+- The design uses NO CSS modules, NO CSS-in-JS libraries — only Tailwind utility classes and inline `style` attributes for skew transforms
