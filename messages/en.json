@@ -9,17 +9,13 @@
     "theme": "Theme",
     "brutalistic": "Brutalistic",
     "minimalistic": "Minimalistic",
-    "fontSize": "Font size",
-    "sm": "Sm",
-    "md": "Md",
-    "lg": "Lg",
     "language": "Language"
   },
   "Hero": {
     "weBuild": "We build",
     "digital": "Digital",
     "solutions": "solutions.",
-    "tagline": "A small studio with big ambitions. From web apps to mobile apps, with a great touch in everything we build."
+    "tagline": "We are a young team of developers driven by creativity, innovation, and an open vision of the digital world. We’re proud to serve our community and clients with thoughtful solutions, putting client satisfaction at the heart of everything we do."
   },
   "Home": {
     "title": "Home"
@@ -41,30 +37,83 @@
     "description": "Got a project, a question, or just want to shout something? Open the channel — every transmission gets an answer.",
     "eyebrow": "// open channel",
     "headline": "Get in touch.",
-    "chip": "Signal strong",
+    "chip": "Contact For Support and Project Deals",
     "info": {
       "email": "Email",
       "phone": "Phone"
     },
     "values": {
-      "email": "signal@mmtow.studio",
-      "email2": "press@mmtow.studio",
-      "phone": "+1 (555) 013-3742"
+      "email": "madmobteam@gmail.com",
+      "phone": "+9647704056209"
     },
     "social": {
-      "title": "Inbox never sleeps",
+      "title": "Our Social Medias",
       "intro": "A sample of what lands in our DMs every week — built-in demo data.",
       "demo": "Demo feed",
       "m1": "Hey! Can you ship a booking flow before Friday? The budget is ready.",
       "m2": "The new dashboard build looks unreal 🔥 who designed this?",
-      "m3": "Just DMed you the brief — check spam if it is not there.",
+      "m3": "Give us a follow for our latest updates!",
       "m4": "Quote for a mobile app? 12 screens, login + payments.",
       "m5": "Case study reposted. Sharp work, team.",
-      "m6": "Server is live. Ping us anytime, we reply fast."
+      "m6": "Server is live. Ping us anytime, we reply fast.",
+      "m7": "Check our TikTok vidoes!"
     }
   },
-  "Projects": {
-    "title": "Projects",
-    "description": "A collection of my work."
+  "Loader": {
+    "readingFiles": "reading files"
+  },
+  "Machine": {
+    "marquee": {
+      "title": "MMB'S PROJECTS OVER TIME",
+      "slots": "5 projects"
+    },
+    "glass": {
+      "team": "Mad Mob's team work",
+      "pick": "pick a project"
+    },
+    "details": {
+      "header": "project details",
+      "selected": "Currently Selected",
+      "awaiting": "awaiting selection",
+      "empty": "No project selected",
+      "hint": "tap a project on the machine — the full breakdown shows up here",
+      "description": "description",
+      "year": "year",
+      "stack": "stack",
+      "clear": "clear selection"
+    },
+    "delivery": {
+      "bay": "delivery bay",
+      "waiting": "empty // waiting",
+      "dispensed": "dispensed // ready",
+      "prompt": "pick a project above — it drops here",
+      "cta": "Build something like this"
+    },
+    "base": {
+      "location": "mmt // sulaymaniyah",
+      "est": "est. 2025"
+    },
+    "projects": {
+      "A1": {
+        "tag": "Marketplace platform",
+        "description": "A full marketplace for local sellers: storefronts, cart, checkout and payouts in one flow. Built for low-end phones and slow networks first, then everything else."
+      },
+      "A2": {
+        "tag": "Podcast hosting",
+        "description": "Hosting, publishing and analytics for independent podcasters. Uploads get trimmed, normalized and transcoded automatically before they go live."
+      },
+      "A3": {
+        "tag": "Dev tools & utilities",
+        "description": "A command-line toolkit that scaffolds, seeds and deploys small web apps from a single config file. Ships with its own offline docs."
+      },
+      "B1": {
+        "tag": "City guide app",
+        "description": "An offline-first city guide with curated routes, local business pins and a bilingual interface. Works with zero bars of signal."
+      },
+      "B2": {
+        "tag": "Motion & 3D work",
+        "description": "A real-time 3D configurator and motion library used across our client sites. Everything runs in the browser — no plugins, no downloads."
+      }
+    }
   }
 }

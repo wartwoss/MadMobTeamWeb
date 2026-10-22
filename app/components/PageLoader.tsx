@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, animate, motion, useMotionValue } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 const BARS = [40, 90, 55, 100, 30, 75, 60, 85, 45, 95, 50, 70];
 
@@ -10,6 +11,7 @@ type PageLoaderProps = {
 };
 
 export default function PageLoader({ title }: PageLoaderProps) {
+  const t = useTranslations("Loader");
   const [done, setDone] = useState(false);
   const [pct, setPct] = useState(0);
   const progress = useMotionValue(0);
@@ -40,11 +42,11 @@ export default function PageLoader({ title }: PageLoaderProps) {
           transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
         >
           <div className="flex items-start justify-between">
-            <span className="bg-neutral-200 px-2 py-1 font-[family-name:var(--font-space-mono)] text-[10px] font-bold uppercase tracking-widest text-black sm:text-xs">
+            <span className="bg-neutral-200 px-2 py-1 font-[family-name:var(--font-space-mono)] text-[0.625rem] font-bold uppercase tracking-widest text-black sm:text-xs">
               Mad Mob Team
             </span>
-            <span className="animate-blink-fast pt-1 font-[family-name:var(--font-space-mono)] text-[10px] uppercase tracking-widest text-red-600 sm:text-xs">
-              ■ reading files
+            <span className="animate-blink-fast pt-1 font-[family-name:var(--font-space-mono)] text-[0.625rem] uppercase tracking-widest text-red-600 sm:text-xs">
+              ■ {t("readingFiles")}
             </span>
           </div>
 
