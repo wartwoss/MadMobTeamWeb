@@ -30,7 +30,49 @@
   },
   "About": {
     "title": "About",
-    "description": "This is the about page."
+    "description": "Meet MadMobTeam, our services, and the vision behind our digital work.",
+    "studioProfile": "Studio profile",
+    "headline": "We turn ideas into digital solutions.",
+    "intro": "We are <studio>MadMobTeam</studio>, a technology and creative studio dedicated to helping businesses, brands, and entrepreneurs grow in the digital world.",
+    "introBody": "We bring together software development, specialized design, and digital presence to create practical, reliable solutions built around each client's needs. From custom systems that simplify everyday operations to websites and applications that bring ideas to life, we combine technical expertise with thoughtful design to deliver meaningful results.",
+    "statement": "We don't just build products. We build tools, experiences, and digital identities that help businesses move forward.",
+    "services": {
+      "label": "Services",
+      "title": "What We Do",
+      "items": {
+        "software": {
+          "title": "IT Solutions & Software Development",
+          "body": "We design and develop custom software systems that solve real-world problems, improve workflows, and help businesses operate more efficiently."
+        },
+        "web": {
+          "title": "Websites & Web Applications",
+          "body": "From professional business websites to interactive web applications, we create modern, responsive digital experiences."
+        },
+        "community": {
+          "title": "Community Services",
+          "body": "At <studio>MadMobTeam</studio>, we believe technology is more than software: it's a way to bring people together. Through fun, interactive digital experiences, mini-games, and creative projects inspired by Kurdish culture and local events, we create opportunities for our community to connect, socialize, and share memorable experiences."
+        }
+      }
+    },
+    "approach": {
+      "architecture": "We start by understanding the software architecture needed to solve the problem at hand.",
+      "api": "We build around <tech>RESTful API</tech> architecture.",
+      "tools": "We also work with tools like <tech>React, React Native, Laravel, NestJS, and Flutter</tech>, among many others."
+    },
+    "vision": {
+      "label": "Vision",
+      "title": "Our Vision",
+      "paragraph1": "We aim to make powerful technology more accessible to businesses and individuals through useful, thoughtfully designed solutions built for long-term growth.",
+      "paragraph2": "Whether it's a system that improves business operations, a website that introduces a brand to the world, or an application that turns an idea into a service, we're here to make it happen."
+    },
+    "cta": {
+      "label": "Let's collaborate",
+      "title": "Let's Build Something Together.",
+      "body": "Have an idea, a business challenge, or a project in mind? We'd love to hear about it.",
+      "promiseStart": "Your idea. Our expertise.",
+      "promiseHighlight": "One shared vision.",
+      "closing": "Let's create something that makes a difference."
+    }
   },
   "Contact": {
     "title": "Contact",
