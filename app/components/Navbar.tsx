@@ -59,19 +59,25 @@ function LanguageButtons() {
       </button>
       <button
         type="button"
-        disabled
-        aria-disabled="true"
-        title="Arabic is not available"
-        className={`cursor-not-allowed border-2 border-white/30 px-2 py-0.5 font-[family-name:var(--font-space-mono)] ${size} text-white/30`}
+        onClick={() => switchLocale("ar")}
+        aria-current={locale === "ar" ? "true" : undefined}
+        className={`cursor-pointer border-2 border-white px-2 py-0.5 font-[family-name:var(--font-space-mono)] ${size} transition-all ${
+          locale === "ar"
+            ? "bg-white text-black"
+            : "text-white hover:bg-white hover:text-black"
+        }`}
       >
         Ar
       </button>
       <button
         type="button"
-        disabled
-        aria-disabled="true"
-        title="Kurdish is not available"
-        className={`cursor-not-allowed border-2 border-white/30 px-2 py-0.5 font-[family-name:var(--font-space-mono)] ${size} text-white/30`}
+        onClick={() => switchLocale("ckb")}
+        aria-current={locale === "ckb" ? "true" : undefined}
+        className={`cursor-pointer border-2 border-white px-2 py-0.5 font-[family-name:var(--font-space-mono)] ${size} transition-all ${
+          locale === "ckb"
+            ? "bg-white text-black"
+            : "text-white hover:bg-white hover:text-black"
+        }`}
       >
         Kur
       </button>
