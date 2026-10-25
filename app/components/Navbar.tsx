@@ -22,7 +22,7 @@ function SettingsContent() {
           {t("brutalistic")}
         </span>
         <span className={`cursor-pointer border-2 border-white px-2 py-0.5 font-[family-name:var(--font-space-mono)] ${size} text-white transition-all hover:bg-white hover:text-black`}>
-          {t("minimalistic")}
+          {t("modern")}
         </span>
       </div>
       <div className={`border-b-2 border-white pb-2 font-[family-name:var(--font-space-mono)] ${size} font-bold uppercase ${tracking} text-white`}>
