@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import PageFrame from "../../components/PageFrame";
-import { RevealUp } from "../../components/Reveal";
+import { FadeIn } from "../../components/Reveal";
 
 const MONO = "font-[family-name:var(--font-space-mono)]";
 const BODY = `${MONO} text-sm leading-relaxed text-neutral-600 sm:text-base`;
@@ -79,30 +79,28 @@ export default function About() {
   return (
     <PageFrame title={t("title")} loaderTitle={tNav("about")}>
       <article className="bg-neutral-100 text-neutral-900">
-        <div className="mx-auto w-full max-w-4xl px-6 py-20 text-left sm:px-8 sm:py-28">
+        <FadeIn
+          duration={1.2}
+          className="mx-auto w-full max-w-4xl px-6 py-20 text-left sm:px-8 sm:py-28"
+        >
           {/* Title */}
           <header>
-            <RevealUp
-              delay={0.05}
-              className={`${MONO} text-[0.6875rem] font-bold uppercase tracking-[0.3em] text-neutral-500`}
+            <span
+              className={`${MONO} block text-[0.6875rem] font-bold uppercase tracking-[0.3em] text-neutral-500`}
             >
               {"// studio profile"}
-            </RevealUp>
+            </span>
 
-            <RevealUp delay={0.15}>
-              <h1 className="mt-5 text-4xl font-black uppercase leading-[0.92] tracking-tighter text-neutral-900 sm:text-6xl lg:text-7xl">
-                {t("title")}{" "}
-                <span className="inline-block -skew-x-6 bg-red-600 px-2 text-neutral-50 sm:px-3">
-                  <span className="inline-block skew-x-6">Mad Mob Team</span>
-                </span>
-              </h1>
-            </RevealUp>
+            <h1 className="mt-5 text-4xl font-black uppercase leading-[0.92] tracking-tighter text-neutral-900 sm:text-6xl lg:text-7xl">
+              {t("title")}{" "}
+              <span className="inline-block -skew-x-6 bg-red-600 px-2 text-neutral-50 sm:px-3">
+                <span className="inline-block skew-x-6">Mad Mob Team</span>
+              </span>
+            </h1>
 
-            <RevealUp delay={0.3}>
-              <p className="mt-8 max-w-2xl border-l-4 border-red-600 pl-5 text-2xl font-black uppercase leading-[1.02] tracking-tight text-neutral-900 sm:text-3xl lg:text-4xl">
-                We turn ideas into digital solutions.
-              </p>
-            </RevealUp>
+            <p className="mt-8 max-w-2xl border-l-4 border-red-600 pl-5 text-2xl font-black uppercase leading-[1.02] tracking-tight text-neutral-900 sm:text-3xl lg:text-4xl">
+              We turn ideas into digital solutions.
+            </p>
           </header>
 
           {/* Intro */}
@@ -191,7 +189,7 @@ export default function About() {
               {ctaClosing}
             </p>
           </section>
-        </div>
+        </FadeIn>
       </article>
     </PageFrame>
   );

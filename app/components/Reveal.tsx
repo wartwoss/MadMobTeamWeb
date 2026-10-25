@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 
 export const EASE = [0.16, 1, 0.3, 1] as const;
+export const FADE_EASE = [0.4, 0, 0.2, 1] as const;
 export const START = 1.35;
 
 type RevealMotionProps = {
@@ -31,6 +32,31 @@ export function RevealMotion({
     >
       {children}
     </motion.span>
+  );
+}
+
+type FadeInProps = {
+  children: React.ReactNode;
+  delay?: number;
+  duration?: number;
+  className?: string;
+};
+
+export function FadeIn({
+  children,
+  delay = 0,
+  duration = 1.2,
+  className = "",
+}: FadeInProps) {
+  return (
+    <motion.div
+      className={className}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: START + delay, duration, ease: FADE_EASE }}
+    >
+      {children}
+    </motion.div>
   );
 }
 
