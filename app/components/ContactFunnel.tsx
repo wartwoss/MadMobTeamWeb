@@ -97,7 +97,7 @@ export default function ContactFunnel() {
       key: "telegram",
       icon: ICONS.telegram,
       name: "Our Telegram",
-      text: t("social.m4"),
+      text: t("values.phone"),
       color: "#229ED9",
       fg: "#fff",
       chat: true,
@@ -155,7 +155,7 @@ export default function ContactFunnel() {
                 <div className="mt-3 h-1.5 w-full bg-orange-600" />
 
                 <div className="mx-1.5 mt-3 grid grid-cols-2 gap-2 sm:mx-2 sm:mt-4 sm:gap-2.5">
-                  {cards.map((card, index) => {
+                  {cards.map((card) => {
                     const Icon = card.icon;
                     const body = (
                       <>
