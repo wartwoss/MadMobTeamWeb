@@ -76,7 +76,7 @@ export function RevealLine({
   className = "",
 }: RevealLineProps) {
   return (
-    <span className={`block overflow-hidden ${className}`}>
+    <span className={`reveal-clip block ${className}`}>
       <RevealMotion delay={delay} duration={duration} from={from}>
         {children}
       </RevealMotion>

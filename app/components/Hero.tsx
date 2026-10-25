@@ -3,7 +3,7 @@ import { RevealMotion, RevealUp } from './Reveal';
 
 function PlainLine({text, delay}: {text: string; delay: number}) {
   return (
-    <span className="inline-block overflow-hidden align-bottom">
+    <span className="reveal-clip inline-block align-bottom">
       <RevealMotion inline delay={delay} from="90%">
         {text}
       </RevealMotion>
@@ -11,17 +11,9 @@ function PlainLine({text, delay}: {text: string; delay: number}) {
   );
 }
 
-function HighlightedLine({
-  text,
-  delay,
-  period = false,
-}: {
-  text: string;
-  delay: number;
-  period?: boolean;
-}) {
+function HighlightedLine({text, delay}: {text: string; delay: number}) {
   return (
-    <span className="inline-block overflow-hidden align-bottom px-1">
+    <span className="reveal-clip inline-block align-bottom px-2">
       <RevealMotion inline delay={delay} from="110%">
         <span className="inline-block">
           <span
@@ -32,7 +24,6 @@ function HighlightedLine({
               {text}
             </span>
           </span>
-          {period ? "." : null}
         </span>
       </RevealMotion>
     </span>
@@ -71,7 +62,7 @@ export default function Hero() {
             )}
             <br />
             {highlightLast ? (
-              <HighlightedLine text={t('digital')} delay={0.49} period />
+              <HighlightedLine text={t('digital')} delay={0.49} />
             ) : (
               <PlainLine text={t('solutions')} delay={0.49} />
             )}
@@ -80,7 +71,7 @@ export default function Hero() {
           <RevealUp
             delay={0.62}
             duration={0.8}
-            className="max-w-sm pt-2 text-left text-pretty font-[family-name:var(--font-space-mono)] text-base leading-relaxed text-neutral-500 sm:text-lg"
+            className="max-w-sm pt-2 text-start text-pretty font-[family-name:var(--font-space-mono)] text-base leading-relaxed text-neutral-500 sm:text-lg"
           >
             {t('tagline')}
           </RevealUp>

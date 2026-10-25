@@ -126,6 +126,15 @@
   }
 }
 
+/* Reveal wrappers clip their content to the line box. Arabic-script glyphs
+   routinely extend past that box, so give the clip area breathing room while
+   the negative margins keep the original line spacing. */
+.reveal-clip {
+  overflow: hidden;
+  padding-block: 0.22em;
+  margin-block: -0.22em;
+}
+
 /* Arabic-script locales (Arabic + Sorani Kurdish) use a self-hosted playful
    face that includes the Kurdish letters (ڕ ڵ ێ ۆ ە). It carries both the
    display and body roles. This sits outside @layer so it wins over the
