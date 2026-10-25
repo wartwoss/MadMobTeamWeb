@@ -33,7 +33,7 @@ export default function StoryIntro({
   return (
     <section className="relative overflow-hidden border-b-4 border-black bg-neutral-100 px-6 py-24 text-black sm:py-32">
       <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-        <h1 className={`${titleClassName} ${isArabicScript ? "title-extra-bold" : ""}`}>
+        <h1 className={titleClassName}>
           {lines.map((line, index) => (
             <RevealLine key={line} delay={0.15 + index * 0.17} className="pb-1">
               {line}

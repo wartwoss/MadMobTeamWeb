@@ -60,9 +60,7 @@ export default function Hero() {
       <div className="mx-auto max-w-5xl">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
           <h1
-            className={`${titleSize} font-black uppercase leading-none tracking-tighter ${
-              isArabicScript ? "title-extra-bold" : ""
-            }`}
+            className={`${titleSize} font-black uppercase leading-none tracking-tighter`}
           >
             <PlainLine text={t('weBuild')} delay={0.15} />
             <br />

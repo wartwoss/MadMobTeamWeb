@@ -114,15 +114,6 @@
     font-size: 106.25%;
   }
 
-  /* Arabic-script locales (Arabic + Sorani Kurdish) fall back to a system
-     font that renders noticeably smaller than the Latin display face at the
-     same px size. Scale their rem-based type scale up further so nav links,
-     body copy and small labels stay readable. */
-  html[lang="ar"],
-  html[lang="ckb"] {
-    font-size: 118.75%;
-  }
-
   body {
     background-color: #fff;
     color: #000;
@@ -135,10 +126,31 @@
   }
 }
 
-/* Arabic-script fallback faces only carry bold (700) and the added stroke
-   looked blurry, so titles sit at extra-bold for a clean, even weight. */
-.title-extra-bold {
-  font-weight: 800;
+/* Arabic-script locales (Arabic + Sorani Kurdish) use a self-hosted playful
+   face that includes the Kurdish letters (ڕ ڵ ێ ۆ ە). It carries both the
+   display and body roles. This sits outside @layer so it wins over the
+   generated next/font declarations. */
+html[lang="ar"] body,
+html[lang="ckb"] body {
+  --font-display: var(--font-arabic);
+  --font-space-mono: var(--font-arabic);
+}
+
+/* Arabic is a connected script — tracking utilities break the joins. */
+html[lang="ar"] body *,
+html[lang="ckb"] body * {
+  letter-spacing: normal;
+}
+
+/* The Latin poster style uses very tight leading; Arabic glyphs with their
+   ascenders/descenders need more vertical room to stay readable. */
+html[lang="ar"] h1,
+html[lang="ar"] h2,
+html[lang="ar"] h3,
+html[lang="ckb"] h1,
+html[lang="ckb"] h2,
+html[lang="ckb"] h3 {
+  line-height: 1.25;
 }
 
 :root {

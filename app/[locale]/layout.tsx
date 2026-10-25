@@ -32,6 +32,19 @@ const spaceMono = localFont({
   display: 'swap',
 });
 
+/* Arabic-script face. Playpen Sans Arabic is a playful, handwriting-style
+   family that still stays highly legible, and it covers the Sorani Kurdish
+   letters (ڕ ڵ ێ ۆ ە) that many Arabic fonts omit. It carries both headings
+   and body copy for Arabic/Kurdish. */
+const arabicSans = localFont({
+  src: '../fonts/arabic-playpen.woff2',
+  weight: '100 800',
+  style: 'normal',
+  variable: '--font-arabic',
+  display: 'swap',
+  preload: false,
+});
+
 export const metadata: Metadata = {
   title: "mmt-ow",
   description: "",
@@ -54,7 +67,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir={dir}>
-      <body className={`${bigShoulders.variable} ${spaceMono.variable} font-[family-name:var(--font-display)]`}>
+      <body className={`${bigShoulders.variable} ${spaceMono.variable} ${arabicSans.variable} font-[family-name:var(--font-display)]`}>
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
