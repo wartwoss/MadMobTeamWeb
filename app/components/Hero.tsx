@@ -47,10 +47,14 @@ export default function Hero() {
     : "text-5xl sm:text-7xl lg:text-8xl";
 
   return (
-    <section className="border-b-4 border-black bg-neutral-100 px-6 py-20 sm:py-28">
+    <section
+      aria-labelledby="hero-title"
+      className="border-b-4 border-black bg-neutral-100 px-6 py-20 sm:py-28"
+    >
       <div className="mx-auto max-w-5xl">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between lg:gap-12">
           <h1
+            id="hero-title"
             className={`${titleSize} font-black uppercase leading-none tracking-tighter`}
           >
             <PlainLine text={t('weBuild')} delay={0.15} />

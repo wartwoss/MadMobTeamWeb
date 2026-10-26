@@ -1,17 +1,13 @@
-"use client";
+import { setRequestLocale } from "next-intl/server";
+import HomeView from "../components/HomeView";
 
-import {useTranslations} from 'next-intl';
-import PageFrame from "../components/PageFrame";
-import Hero from "../components/Hero";
-import TeamSection from "../components/TeamSection";
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
 
-export default function Home() {
-  const t = useTranslations('Home');
-
-  return (
-    <PageFrame title={t('title')}>
-      <Hero />
-      <TeamSection />
-    </PageFrame>
-  );
+  return <HomeView />;
 }

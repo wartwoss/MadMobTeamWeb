@@ -78,6 +78,7 @@ export default function TeamSection() {
   return (
     <section
       ref={ref}
+      aria-labelledby="team-title"
       className="relative overflow-hidden border-b-4 border-black bg-white px-6 pt-14 pb-28 sm:pt-16 sm:pb-36"
     >
       <BloodSplash show={show} />
@@ -85,6 +86,7 @@ export default function TeamSection() {
       <div className="relative z-10 mx-auto max-w-6xl">
         <div className="mb-16">
           <h2
+            id="team-title"
             className="inline-block bg-neutral-200 px-6 py-3 text-5xl font-black uppercase italic tracking-tighter sm:text-6xl lg:text-7xl"
             style={{ transform: "skewX(-6deg)" }}
           >
@@ -95,7 +97,7 @@ export default function TeamSection() {
                 animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
                 transition={{ duration: 0.9, delay: 0.1, ease: EASE }}
               >
-                Mad Mob Team
+                MadMobTeam
               </motion.span>
             </span>
           </h2>

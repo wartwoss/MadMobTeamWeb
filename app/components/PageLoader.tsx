@@ -37,13 +37,14 @@ export default function PageLoader({ title }: PageLoaderProps) {
       {!done && (
         <motion.div
           key="mmt-loader"
+          data-page-loader
           className="fixed inset-0 z-[200] flex flex-col justify-between overflow-hidden bg-black px-6 py-6 text-white sm:px-10 sm:py-8"
           exit={{ y: "-101%" }}
           transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
         >
           <div className="flex items-start justify-between">
             <span className="bg-neutral-200 px-2 py-1 font-[family-name:var(--font-space-mono)] text-[0.625rem] font-bold uppercase tracking-widest text-black sm:text-xs">
-              Mad Mob Team
+              MadMobTeam
             </span>
             <span className="animate-blink-fast pt-1 font-[family-name:var(--font-space-mono)] text-[0.625rem] uppercase tracking-widest text-red-600 sm:text-xs">
               ■ {t("readingFiles")}

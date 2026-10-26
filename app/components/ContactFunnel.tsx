@@ -1,11 +1,19 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { useLocale, useTranslations } from "next-intl";
 import { EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/outline";
-import { FaHeart } from "react-icons/fa";
+import { HeartIcon } from "@heroicons/react/24/solid";
 import GlitchText from "./GlitchText";
 import SignalBars from "./SignalBars";
-import TrapezoidChains from "./TrapezoidChains";
+
+/* Decorative chains hang above the card; loading them client-side keeps the
+   contact copy and links in the initial HTML without shipping the animation
+   code to crawlers or to visitors who never scroll. */
+const TrapezoidChains = dynamic(() => import("./TrapezoidChains"), {
+  ssr: false,
+});
 
 const TRAPEZOID = "trapezoid-clip";
 const MONO = "font-[family-name:var(--font-space-mono)]";
@@ -56,6 +64,27 @@ export default function ContactFunnel() {
   const t = useTranslations("Contact");
   const locale = useLocale();
   const skew = locale === "ar" || locale === "ckb" ? 5 : -5;
+  const [copied, setCopied] = useState<string | null>(null);
+  const copyTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimer.current) window.clearTimeout(copyTimer.current);
+    };
+  }, []);
+
+  /* Keep the native mailto:/tel: href, and also copy the value so clicks get
+     feedback even on desktops without a configured mail/phone app. */
+  async function handleCopy(value: string, key: string) {
+    try {
+      await navigator.clipboard.writeText(value);
+    } catch {
+      return;
+    }
+    setCopied(key);
+    if (copyTimer.current) window.clearTimeout(copyTimer.current);
+    copyTimer.current = window.setTimeout(() => setCopied(null), 2200);
+  }
 
   const cards: InfoCard[] = [
     {
@@ -106,7 +135,7 @@ export default function ContactFunnel() {
     {
       key: "tiktok",
       icon: ICONS.tiktok,
-      name: "Mad Mob Team",
+      name: "MadMobTeam",
       text: t("social.m7"),
       color: "#25F4EE",
       fg: "#000",
@@ -119,7 +148,10 @@ export default function ContactFunnel() {
     "flex items-start gap-2 border-2 border-white bg-black p-2 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:animate-shock hover:border-orange-600 hover:bg-orange-600 hover:text-black hover:shadow-[6px_6px_0_0_#fff] sm:gap-2.5 sm:border sm:p-3";
 
   return (
-    <section className="relative cursor-crosshair bg-white px-3 pt-24 pb-6 sm:px-6 sm:pt-32 sm:pb-14 md:pt-40 lg:pt-44">
+    <section
+      aria-labelledby="contact-title"
+      className="relative cursor-crosshair bg-white px-3 pt-24 pb-6 sm:px-6 sm:pt-32 sm:pb-14 md:pt-40 lg:pt-44"
+    >
       <TrapezoidChains />
 
       <div className="relative z-30 flow-root mx-auto max-w-4xl">
@@ -135,10 +167,13 @@ export default function ContactFunnel() {
                 className={`trapezoid-content bg-black text-white ${TRAPEZOID}`}
               >
                 <div className="mt-1.5 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-                  <h2 className="flex items-end gap-2 text-xl font-black uppercase leading-[0.95] tracking-tighter sm:text-2xl lg:text-3xl">
+                  <h1
+                    id="contact-title"
+                    className="flex items-end gap-2 text-xl font-black uppercase leading-[0.95] tracking-tighter sm:text-2xl lg:text-3xl"
+                  >
                     <GlitchText>{t("headline")}</GlitchText>
                     <SignalBars className="pb-[0.12em]" />
-                  </h2>
+                  </h1>
                   <span
                     className="inline-block self-start border-2 border-orange-600 bg-orange-600 px-2.5 py-1 text-[0.6875rem] font-black uppercase text-black sm:self-end sm:border sm:px-3 sm:py-1 sm:text-xs"
                     style={{ transform: `skewX(${skew}deg)` }}
@@ -154,7 +189,11 @@ export default function ContactFunnel() {
 
                 <div className="mt-3 h-1.5 w-full bg-orange-600" />
 
-                <div className="mx-1.5 mt-3 grid grid-cols-2 gap-2 sm:mx-2 sm:mt-4 sm:gap-2.5">
+                <p className="mx-1.5 mt-3 max-w-2xl font-[family-name:var(--font-space-mono)] text-[0.6875rem] leading-relaxed text-neutral-300 sm:mx-2 sm:text-xs">
+                  {t("description")}
+                </p>
+
+                <address className="mx-1.5 mt-3 grid grid-cols-2 gap-2 not-italic sm:mx-2 sm:mt-4 sm:gap-2.5">
                   {cards.map((card) => {
                     const Icon = card.icon;
                     const body = (
@@ -182,6 +221,14 @@ export default function ContactFunnel() {
                               {card.sub}
                             </span>
                           )}
+                          {copied === card.label && (
+                            <span
+                              aria-live="polite"
+                              className={`mt-1.5 inline-block ${MONO} bg-orange-600 px-1.5 py-0.5 text-[0.5625rem] font-bold uppercase tracking-widest text-black`}
+                            >
+                              {t("copied")}
+                            </span>
+                          )}
                         </span>
                       </>
                     );
@@ -192,19 +239,27 @@ export default function ContactFunnel() {
                     };
 
                     return card.href ? (
-                      <a key={card.label} href={card.href} {...shared} />
+                      <a
+                        key={card.label}
+                        href={card.href}
+                        onClick={() => handleCopy(card.value, card.label)}
+                        {...shared}
+                      />
                     ) : (
                       <div key={card.label} {...shared} />
                     );
                   })}
-                </div>
+                </address>
 
-                <div className="mx-1.5 mt-3 bg-neutral-900 p-2 sm:mx-2 sm:mt-3 sm:p-2.5 lg:p-3">
+                <div
+                  data-nosnippet
+                  className="mx-1.5 mt-3 bg-neutral-900 p-2 sm:mx-2 sm:mt-3 sm:p-2.5 lg:p-3"
+                >
                   <div className="flex flex-wrap items-start justify-between gap-2 border-b-2 border-orange-600 pb-2 sm:gap-3 sm:border-b">
                     <div className="min-w-0">
-                      <h3 className="text-sm font-black uppercase leading-none tracking-tighter sm:text-base">
+                      <h2 className="text-sm font-black uppercase leading-none tracking-tighter sm:text-base">
                         {t("social.title")}
-                      </h3>
+                      </h2>
                     </div>
                     <span
                       className={`${MONO} shrink-0 border-2 border-orange-600 px-2 py-1 text-[0.5625rem] font-bold uppercase tracking-widest text-orange-600 sm:border sm:text-[0.625rem]`}
@@ -214,11 +269,11 @@ export default function ContactFunnel() {
                     </span>
                   </div>
 
-                  <div className="mt-2 grid grid-cols-2 gap-1.5 sm:mt-3 sm:grid-cols-2 sm:gap-2 lg:grid-cols-4">
+                  <ul className="mt-2 grid list-none grid-cols-2 gap-1.5 p-0 sm:mt-3 sm:grid-cols-2 sm:gap-2 lg:grid-cols-4">
                     {feed.map((post) => {
                       const cardProps = {
                         className:
-                          "group flex flex-col border-2 border-white bg-black p-2 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:border-orange-600 hover:shadow-[6px_6px_0_0_#fff] sm:border sm:p-2.5",
+                          "group flex h-full flex-col border-2 border-white bg-black p-2 transition-all hover:-translate-x-1 hover:-translate-y-1 hover:border-orange-600 hover:shadow-[6px_6px_0_0_#fff] sm:border sm:p-2.5",
                       };
 
                       const content = (
@@ -235,9 +290,9 @@ export default function ContactFunnel() {
                               />
                             </span>
                             <span className="min-w-0 flex-1">
-                              <span className="block truncate text-[0.6875rem] font-black uppercase sm:text-xs">
+                              <h3 className="block truncate text-[0.6875rem] font-black uppercase sm:text-xs">
                                 {post.name}
-                              </span>
+                              </h3>
                               {post.handle && (
                                 <span
                                   className={`${MONO} block truncate text-[0.5625rem] text-neutral-400 sm:text-[0.625rem]`}
@@ -265,52 +320,33 @@ export default function ContactFunnel() {
                           >
                             {post.text}
                             {post.key === "instagram" && (
-                              <FaHeart
+                              <HeartIcon
+                                aria-hidden
                                 className="ms-1 inline-block h-3 w-3 align-[-0.125em] text-red-600 sm:h-3.5 sm:w-3.5"
-                                aria-label="heart"
                               />
                             )}
                           </p>
                         </>
                       );
 
-                      const openLink = () => {
-                        if (post.href) {
-                          window.open(post.href, "_blank", "noopener,noreferrer");
-                        }
-                      };
-
                       return (
-                        <article
-                          key={post.key}
-                          {...cardProps}
-                          className={`${cardProps.className}${
-                            post.href ? " cursor-pointer" : ""
-                          }`}
-                          {...(post.href
-                            ? {
-                                role: "link",
-                                tabIndex: 0,
-                                onClick: openLink,
-                                onKeyDown: (
-                                  event: React.KeyboardEvent<HTMLElement>,
-                                ) => {
-                                  if (
-                                    event.key === "Enter" ||
-                                    event.key === " "
-                                  ) {
-                                    event.preventDefault();
-                                    openLink();
-                                  }
-                                },
-                              }
-                            : {})}
-                        >
-                          {content}
-                        </article>
+                        <li key={post.key} className="min-w-0">
+                          {post.href ? (
+                            <a
+                              href={post.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              {...cardProps}
+                            >
+                              {content}
+                            </a>
+                          ) : (
+                            <div {...cardProps}>{content}</div>
+                          )}
+                        </li>
                       );
                     })}
-                  </div>
+                  </ul>
                 </div>
               </div>
             </div>

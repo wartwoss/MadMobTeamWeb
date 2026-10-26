@@ -3,7 +3,10 @@
     "projects": "Projects",
     "about": "About",
     "contact": "Contact",
-    "settings": "Settings"
+    "settings": "Settings",
+    "primary": "Primary navigation",
+    "menu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "Settings": {
     "theme": "Theme",
@@ -26,7 +29,9 @@
     "backend": "Backend"
   },
   "Footer": {
-    "rights": "© 2025. All rights reserved."
+    "rights": "© 2026. All rights reserved.",
+    "tagline": "Digital products engineered for growth.",
+    "enterprise": "We partner with ambitious teams to design, build and maintain secure, scalable websites, platforms and custom systems."
   },
   "About": {
     "title": "About",
@@ -72,6 +77,28 @@
       "promiseStart": "Your idea. Our expertise.",
       "promiseHighlight": "One shared vision.",
       "closing": "Let's create something that makes a difference."
+    },
+    "faq": {
+      "label": "FAQ",
+      "title": "Common questions",
+      "items": {
+        "q1": {
+          "q": "What services does MadMobTeam offer?",
+          "a": "We build business websites, web applications, mobile apps and custom software systems. We also handle UI/UX design, API integration and ongoing maintenance."
+        },
+        "q2": {
+          "q": "Where is MadMobTeam based?",
+          "a": "We are based in Sulaymaniyah, in the Kurdistan Region of Iraq, and work with clients across Iraq and remotely."
+        },
+        "q3": {
+          "q": "How much does a website or app cost?",
+          "a": "Every project is scoped individually based on features, timeline and integrations. Contact us with your requirements and we will send a clear estimate."
+        },
+        "q4": {
+          "q": "How long does a project take?",
+          "a": "A focused website usually takes a few weeks; larger platforms and custom systems are planned in phases. We agree on a timeline before work starts."
+        }
+      }
     }
   },
   "Contact": {
@@ -80,6 +107,7 @@
     "eyebrow": "// open channel",
     "headline": "Get in touch.",
     "chip": "Contact For Support and Project Deals",
+    "copied": "Copied",
     "info": {
       "email": "Email",
       "phone": "Phone"
@@ -101,6 +129,36 @@
       "m7": "Check our TikTok vidoes!"
     }
   },
+  "Meta": {
+    "skip": "Skip to main content",
+    "home": {
+      "title": "MadMobTeam — Web & Software Development in Sulaymaniyah, Iraq",
+      "description": "MadMobTeam is a web and software development studio in Sulaymaniyah, Iraq. We build fast websites, web apps, mobile apps and custom systems for growing businesses.",
+      "keywords": "web development Sulaymaniyah, software company Iraq, web design Kurdistan, mobile app development Iraq, custom software Sulaymaniyah, MadMobTeam"
+    },
+    "about": {
+      "title": "About Us — Software Studio in Sulaymaniyah",
+      "description": "Meet MadMobTeam, a web and software development studio in Sulaymaniyah, Iraq. Discover our services, our process and the vision behind our digital work.",
+      "keywords": "MadMobTeam, software studio Sulaymaniyah, web development team Iraq, About MadMobTeam, Kurdistan software company"
+    },
+    "projects": {
+      "title": "Projects — Web, Mobile & Software Work",
+      "description": "Explore MadMobTeam projects across web development, web apps, mobile apps and custom business systems — built in Sulaymaniyah for clients and communities.",
+      "keywords": "MadMobTeam projects, web development portfolio Iraq, mobile app projects Kurdistan, software case studies Sulaymaniyah",
+      "intro": "A selection of web, mobile and software projects built by MadMobTeam in Sulaymaniyah, Iraq — from marketplaces and podcast platforms to developer tools and offline-first apps.",
+      "listLabel": "Selected projects"
+    },
+    "contact": {
+      "title": "Contact — Start a Project",
+      "description": "Contact MadMobTeam to start a website, web app, mobile app or custom software project. Reach us by email, phone or social media from Sulaymaniyah, Iraq.",
+      "keywords": "contact MadMobTeam, hire web developer Sulaymaniyah, software company contact Iraq, start a project Kurdistan"
+    }
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "description": "The page you were looking for does not exist or has moved.",
+    "back": "Back home"
+  },
   "Loader": {
     "readingFiles": "reading files"
   },
@@ -110,7 +168,7 @@
       "slots": "5 projects"
     },
     "glass": {
-      "team": "Mad Mob's team work",
+      "team": "MadMobTeam's team work",
       "pick": "pick a project"
     },
     "details": {

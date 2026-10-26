@@ -57,6 +57,7 @@ const BULB_COUNT = 14;
 
 function Marquee() {
   const t = useTranslations("Machine");
+  const tMeta = useTranslations("Meta");
 
   return (
     <div
@@ -76,9 +77,15 @@ function Marquee() {
       </div>
 
       <div className="mt-3 sm:mt-4">
-        <h2 className="text-[clamp(1.75rem,8vw,3.75rem)] font-black uppercase leading-[0.85] tracking-tighter text-white">
+        <h1
+          id="projects-title"
+          className="text-[clamp(1.75rem,8vw,3.75rem)] font-black uppercase leading-[0.85] tracking-tighter text-white"
+        >
           {t("marquee.title")}
-        </h2>
+        </h1>
+        <p className="mt-3 max-w-2xl font-[family-name:var(--font-space-mono)] text-xs leading-relaxed text-neutral-400 sm:text-sm">
+          {tMeta("projects.intro")}
+        </p>
       </div>
     </div>
   );
@@ -286,6 +293,7 @@ export default function VendingMachine() {
   return (
     <section
       ref={sectionRef}
+      aria-labelledby="projects-title"
       className="relative border-b-4 border-black bg-neutral-100 px-4 py-10 sm:px-6 sm:py-14 lg:py-20"
     >
       <div className="mx-auto w-full max-w-6xl">
