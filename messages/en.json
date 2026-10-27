@@ -3,16 +3,10 @@
     "projects": "Projects",
     "about": "About",
     "contact": "Contact",
-    "settings": "Settings",
+    "languages": "Languages",
     "primary": "Primary navigation",
     "menu": "Open menu",
     "closeMenu": "Close menu"
-  },
-  "Settings": {
-    "theme": "Theme",
-    "brutalistic": "Brutalistic",
-    "modern": "Modern",
-    "language": "Language"
   },
   "Hero": {
     "weBuild": "We build",

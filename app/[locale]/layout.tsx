@@ -5,8 +5,6 @@ import {getMessages, getTranslations, setRequestLocale} from 'next-intl/server';
 import {hasLocale} from 'next-intl';
 import {notFound} from 'next/navigation';
 import {routing} from '@/i18n/routing';
-import {ThemeProvider} from "../components/ThemeContext";
-import {InlineScript} from "../components/InlineScript";
 import StructuredData from "../components/StructuredData";
 import Analytics from "../components/Analytics";
 import {buildPageMetadata} from "@/app/lib/metadata";
@@ -52,45 +50,13 @@ const arabicSans = localFont({
   preload: false,
 });
 
-/* ---- Modern-theme faces. Sora (display) + Inter (body) carry the Latin
-   locales; Noto Sans Arabic covers Arabic and Sorani Kurdish — including
-   ڕ ڵ ێ ۆ ە — with a clean, contemporary grotesque that matches the
-   cyan/teal look. Not preloaded: they are only fetched once a visitor
-   actually switches to the modern theme. ---- */
-const sora = localFont({
-  src: '../fonts/sora-latin.woff2',
-  weight: '100 800',
-  style: 'normal',
-  variable: '--font-sora',
-  display: 'swap',
-  preload: false,
-});
-
-const inter = localFont({
-  src: '../fonts/inter-latin.woff2',
-  weight: '100 900',
-  style: 'normal',
-  variable: '--font-inter',
-  display: 'swap',
-  preload: false,
-});
-
-const notoArabic = localFont({
-  src: '../fonts/noto-sans-arabic.woff2',
-  weight: '100 900',
-  style: 'normal',
-  variable: '--font-noto-arabic',
-  display: 'swap',
-  preload: false,
-});
-
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   colorScheme: "dark light",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#f5f5f5" },
-    { media: "(prefers-color-scheme: dark)", color: "#041419" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
   ],
 };
 
@@ -182,26 +148,17 @@ export default async function LocaleLayout({
   const dir = locale === 'ar' || locale === 'ckb' ? 'rtl' : 'ltr';
 
   return (
-    <html lang={locale} dir={dir} data-theme="brutalistic" suppressHydrationWarning>
+    <html lang={locale} dir={dir}>
       <head>
-        {/* Runs synchronously during HTML parsing — before the first paint —
-            so a stored "modern" preference never flashes the brutalist tree.
-            Same source of truth as ThemeProvider's lazy read. Rendered via
-            InlineScript so React's client-side re-creates of <head> (Strict
-            Mode remount, Fast Refresh) emit it as an inert data block and
-            never warn about a client-rendered script. */}
-        <InlineScript
-          html={`(function(){try{var t=localStorage.getItem("mmt-theme");if(t==="modern"||t==="brutalistic"){document.documentElement.setAttribute("data-theme",t)}}catch(e){}})()`}
-        />
         {/* No-JS fallback: the design system boots with animated overlays and
             opacity-0 reveal states. Without JavaScript those would hide the
             page forever, so disable the overlays and force revealed content
             for crawlers and no-script visitors. */}
         <noscript>
-          <style>{`[data-page-loader],[data-theme-boot]{display:none!important}[style*="opacity:0"]{opacity:1!important}[style*="translateY"]{transform:none!important}`}</style>
+          <style>{`[data-page-loader]{display:none!important}[style*="opacity:0"]{opacity:1!important}[style*="translateY"]{transform:none!important}`}</style>
         </noscript>
       </head>
-      <body className={`${bigShoulders.variable} ${spaceMono.variable} ${arabicSans.variable} ${sora.variable} ${inter.variable} ${notoArabic.variable} font-[family-name:var(--font-display)]`}>
+      <body className={`${bigShoulders.variable} ${spaceMono.variable} ${arabicSans.variable} font-[family-name:var(--font-display)]`}>
         <StructuredData
           data={[organizationSchema(), websiteSchema(locale)]}
         />
@@ -212,7 +169,7 @@ export default async function LocaleLayout({
           {t("skip")}
         </a>
         <NextIntlClientProvider messages={messages}>
-          <ThemeProvider>{children}</ThemeProvider>
+          {children}
         </NextIntlClientProvider>
         <Analytics />
       </body>

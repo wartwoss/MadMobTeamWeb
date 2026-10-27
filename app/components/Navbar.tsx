@@ -5,53 +5,6 @@ import { useLocale, useTranslations } from "next-intl";
 import { useRouter, usePathname, Link } from "@/i18n/navigation";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { SITE_NAME } from "@/app/lib/site";
-import { useTheme, type Theme } from "./ThemeContext";
-
-function SettingsContent() {
-  const t = useTranslations("Settings");
-  const locale = useLocale();
-  const { theme, setTheme } = useTheme();
-  const isArabicScript = locale === "ar" || locale === "ckb";
-  const size = isArabicScript ? "text-lg" : "text-base";
-  const tracking = isArabicScript ? "tracking-normal" : "tracking-widest";
-
-  const themeButton = (value: Theme) =>
-    `cursor-pointer border-2 border-white px-2 py-0.5 font-[family-name:var(--font-space-mono)] ${size} transition-all ${
-      theme === value
-        ? "bg-white text-black"
-        : "text-white hover:bg-white hover:text-black"
-    }`;
-
-  return (
-    <div className="w-full">
-      <div className={`mb-3 border-b-2 border-white pb-2 font-[family-name:var(--font-space-mono)] ${size} font-bold uppercase ${tracking} text-white`}>
-        {t("theme")}
-      </div>
-      <div className="mb-3 flex flex-wrap gap-2">
-        <button
-          type="button"
-          onClick={() => setTheme("brutalistic")}
-          aria-pressed={theme === "brutalistic"}
-          className={themeButton("brutalistic")}
-        >
-          {t("brutalistic")}
-        </button>
-        <button
-          type="button"
-          onClick={() => setTheme("modern")}
-          aria-pressed={theme === "modern"}
-          className={themeButton("modern")}
-        >
-          {t("modern")}
-        </button>
-      </div>
-      <div className={`border-b-2 border-white pb-2 font-[family-name:var(--font-space-mono)] ${size} font-bold uppercase ${tracking} text-white`}>
-        {t("language")}
-      </div>
-      <LanguageButtons />
-    </div>
-  );
-}
 
 function LanguageButtons() {
   const router = useRouter();
@@ -61,11 +14,11 @@ function LanguageButtons() {
     locale === "ar" || locale === "ckb" ? "text-lg" : "text-base";
 
   function switchLocale(locale: string) {
-    router.replace(pathname, {locale});
+    router.replace(pathname, { locale });
   }
 
   return (
-    <div className="mt-2 flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-2">
       <button
         type="button"
         onClick={() => switchLocale("en")}
@@ -108,7 +61,7 @@ function LanguageButtons() {
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [languagesOpen, setLanguagesOpen] = useState(false);
   const t = useTranslations("Nav");
   const locale = useLocale();
   const pathname = usePathname();
@@ -165,10 +118,10 @@ export default function Navbar() {
           <div className="relative">
             <button
               type="button"
-              onClick={() => setSettingsOpen((prev) => !prev)}
-              aria-expanded={settingsOpen}
-              aria-controls="desktop-settings"
-              aria-label={t("settings")}
+              onClick={() => setLanguagesOpen((prev) => !prev)}
+              aria-expanded={languagesOpen}
+              aria-controls="desktop-languages"
+              aria-label={t("languages")}
               className={`border-2 border-white px-4 py-1.5 font-[family-name:var(--font-display)] font-extrabold uppercase text-white transition-all hover:-translate-y-1 hover:skew-x-[-4deg] hover:bg-white hover:text-black ${
                 isArabicScript
                   ? "text-xl tracking-normal lg:text-2xl"
@@ -177,18 +130,18 @@ export default function Navbar() {
               style={{ transform: "skewX(-4deg)" }}
             >
               <span style={{ display: "inline-block", transform: "skewX(4deg)" }}>
-                {t("settings")}
+                {t("languages")}
               </span>
             </button>
             <div
-              id="desktop-settings"
-              className={`absolute end-0 top-full z-[70] mt-2 w-64 max-w-[calc(100vw-2rem)] border-4 border-white bg-black p-4 shadow-[6px_6px_0_0_#fff] transition-all ${
-                settingsOpen
+              id="desktop-languages"
+              className={`absolute end-0 top-full z-[70] mt-2 w-max max-w-[calc(100vw-2rem)] border-4 border-white bg-black p-4 shadow-[6px_6px_0_0_#fff] transition-all ${
+                languagesOpen
                   ? "visible opacity-100"
                   : "invisible opacity-0"
               }`}
             >
-              <SettingsContent />
+              <LanguageButtons />
             </div>
           </div>
         </div>
@@ -198,7 +151,7 @@ export default function Navbar() {
             type="button"
             onClick={() => {
               setMenuOpen((prev) => !prev);
-              setSettingsOpen(false);
+              setLanguagesOpen(false);
             }}
             aria-expanded={menuOpen}
             aria-controls="mobile-nav"
@@ -255,23 +208,23 @@ export default function Navbar() {
           </Link>
           <button
             type="button"
-            onClick={() => setSettingsOpen((prev) => !prev)}
-            aria-expanded={settingsOpen}
-            aria-controls="mobile-settings"
+            onClick={() => setLanguagesOpen((prev) => !prev)}
+            aria-expanded={languagesOpen}
+            aria-controls="mobile-languages"
             className={`px-6 py-3 text-start font-[family-name:var(--font-display)] font-bold uppercase text-white transition-colors hover:bg-white hover:text-black ${
               isArabicScript ? "text-2xl tracking-normal" : "text-xl tracking-[0.16em]"
             }`}
           >
-            {t("settings")}
+            {t("languages")}
           </button>
           <div
-            id="mobile-settings"
+            id="mobile-languages"
             className={`overflow-hidden transition-all duration-300 ${
-              settingsOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+              languagesOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
             }`}
           >
             <div className="px-6 py-4">
-              <SettingsContent />
+              <LanguageButtons />
             </div>
           </div>
         </div>

@@ -16,8 +16,8 @@ export default function OpenGraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "64px 72px",
-          background: "#041419",
-          color: "#ecfeff",
+          background: "#000000",
+          color: "#ffffff",
           fontFamily: "sans-serif",
           position: "relative",
           overflow: "hidden",
@@ -26,23 +26,21 @@ export default function OpenGraphImage() {
         <div
           style={{
             position: "absolute",
-            top: -220,
-            right: -140,
-            width: 560,
-            height: 560,
-            borderRadius: "50%",
-            background: "rgba(34, 211, 238, 0.16)",
+            top: -80,
+            right: -80,
+            width: 320,
+            height: 320,
+            background: "#dc2626",
           }}
         />
         <div
           style={{
             position: "absolute",
-            bottom: -260,
+            bottom: -120,
             left: -120,
-            width: 520,
-            height: 520,
-            borderRadius: "50%",
-            background: "rgba(45, 212, 191, 0.1)",
+            width: 280,
+            height: 280,
+            border: "4px solid rgba(255, 255, 255, 0.15)",
           }}
         />
 
@@ -54,14 +52,24 @@ export default function OpenGraphImage() {
               justifyContent: "center",
               width: 64,
               height: 64,
-              borderRadius: 18,
-              background: "#22d3ee",
-              color: "#041419",
+              border: "4px solid #ffffff",
+              color: "#ffffff",
               fontSize: 38,
               fontWeight: 800,
+              position: "relative",
             }}
           >
             M
+            <div
+              style={{
+                position: "absolute",
+                top: 5,
+                right: 5,
+                width: 9,
+                height: 9,
+                background: "#dc2626",
+              }}
+            />
           </div>
           <div
             style={{
@@ -70,7 +78,7 @@ export default function OpenGraphImage() {
               fontWeight: 700,
               letterSpacing: 6,
               textTransform: "uppercase",
-              color: "#a5f3fc",
+              color: "#ffffff",
             }}
           >
             MadMobTeam
@@ -95,8 +103,10 @@ export default function OpenGraphImage() {
               display: "flex",
               marginTop: 26,
               fontSize: 30,
-              color: "#67e8f9",
-              fontWeight: 600,
+              color: "#dc2626",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: 2,
             }}
           >
             Web · Mobile · Custom software
@@ -108,14 +118,14 @@ export default function OpenGraphImage() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "flex-end",
-            borderTop: "1px solid rgba(255,255,255,0.14)",
+            borderTop: "2px solid rgba(255,255,255,0.2)",
             paddingTop: 26,
             fontSize: 22,
-            color: "#94a3b8",
+            color: "#a3a3a3",
           }}
         >
           <div style={{ display: "flex" }}>Sulaymaniyah, Iraq</div>
-          <div style={{ display: "flex", color: "#67e8f9" }}>madmobteam.com</div>
+          <div style={{ display: "flex", color: "#ffffff" }}>madmobteam.com</div>
         </div>
       </div>
     ),

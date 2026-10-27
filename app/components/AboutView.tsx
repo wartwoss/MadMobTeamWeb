@@ -3,8 +3,6 @@
 import { useLocale, useTranslations } from "next-intl";
 import PageFrame from "./PageFrame";
 import { FadeIn } from "./Reveal";
-import { useTheme } from "./ThemeContext";
-import ModernAboutPage from "./modern/ModernAboutPage";
 import FaqSection from "./FaqSection";
 
 const MONO = "font-[family-name:var(--font-space-mono)]";
@@ -43,13 +41,6 @@ export default function AboutView() {
   const t = useTranslations("About");
   const tNav = useTranslations("Nav");
   const locale = useLocale();
-  const { theme } = useTheme();
-
-  /* Modern theme: same About.* content, glassy two-column presentation. */
-  if (theme === "modern") {
-    return <ModernAboutPage />;
-  }
-
   const isArabicScript = locale === "ar" || locale === "ckb";
   const servicesGrid = isArabicScript
     ? "mt-8 grid gap-8 md:grid-cols-2 md:gap-6 xl:grid-cols-3 lg:gap-8"

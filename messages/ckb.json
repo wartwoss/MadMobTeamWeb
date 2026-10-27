@@ -3,16 +3,10 @@
     "projects": "پڕۆژە",
     "about": "دەربارەی ئێمە",
     "contact": "پەیوەندی",
-    "settings": "ڕێکخستن",
+    "languages": "زمانەکان",
     "primary": "ناوەڕۆکی سەرەکی",
     "menu": "کردنەوەی لیست",
     "closeMenu": "داخستنی لیست"
-  },
-  "Settings": {
-    "theme": "ڕووکاری",
-    "brutalistic": "بروتالیستی",
-    "modern": "مۆدێرن",
-    "language": "زمان"
   },
   "Hero": {
     "weBuild": "ئێمە چارەسەری",

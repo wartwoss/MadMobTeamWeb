@@ -3,16 +3,10 @@
     "projects": "المشاريع",
     "about": "من نحن",
     "contact": "اتصل بنا",
-    "settings": "الإعدادات",
+    "languages": "اللغات",
     "primary": "التنقل الرئيسي",
     "menu": "فتح القائمة",
     "closeMenu": "إغلاق القائمة"
-  },
-  "Settings": {
-    "theme": "السمة",
-    "brutalistic": "بروتاليستيكي",
-    "modern": "عصري",
-    "language": "اللغة"
   },
   "Hero": {
     "weBuild": "نحن نبني",

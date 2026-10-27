@@ -105,7 +105,7 @@ export default function ContactFunnel() {
     {
       key: "whatsapp",
       icon: ICONS.whatsapp,
-      name: "Our Whatsapp",
+      name: "WhatsApp",
       text: "+9647704056209",
       color: "#25D366",
       fg: "#000",
@@ -125,7 +125,7 @@ export default function ContactFunnel() {
     {
       key: "telegram",
       icon: ICONS.telegram,
-      name: "Our Telegram",
+      name: "Telegram",
       text: t("values.phone"),
       color: "#229ED9",
       fg: "#fff",
